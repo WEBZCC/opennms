@@ -35,7 +35,9 @@ import javax.xml.bind.JAXBException;
 
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.opennms.core.test.OpenNMSJUnit4ClassRunner;
 import org.opennms.core.test.db.annotations.JUnitTemporaryDatabase;
@@ -58,6 +60,9 @@ import org.springframework.test.context.ContextConfiguration;
 public class ConfigStoreDaoImplTest {
     final String configName = "testConfigName";
     final String filename = "testFilename";
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
     @Autowired
     private ConfigStoreDao configStoreDao;
 
@@ -108,6 +113,11 @@ public class ConfigStoreDaoImplTest {
         configStoreDao.deleteConfig(configName, filename + "_2");
         Optional<ConfigData> resultAfterDelete = configStoreDao.getConfigData(configName);
         Assert.assertTrue("FAIL configs count is not equal to 1", resultAfterDelete.get().getConfigs().size() == 1);
+
+        //test last config, not allowe if it is last config
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Deletion of the last config is not allowed. testConfigName, configId testFilename");
+        configStoreDao.deleteConfig(configName, filename);
 
         // updateConfigs
         configStoreDao.updateConfigs(configName, new ConfigData());
