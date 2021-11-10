@@ -69,6 +69,7 @@ import org.opennms.core.test.db.annotations.JUnitTemporaryDatabase;
 import org.opennms.core.utils.DBUtils;
 import org.opennms.features.config.dao.api.ConfigDefinition;
 import org.opennms.features.config.dao.api.ConfigItem;
+import org.opennms.features.config.dao.api.ConfigSchema;
 import org.opennms.features.config.service.api.ConfigurationManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -134,15 +135,20 @@ public class LiquibaseUpgraderIT implements TemporaryDatabaseAware<TemporaryData
 
     @After
     public void tearDown() throws SQLException, IOException {
-        if (cm.getXmlConfiguration(SCHEMA_NAME_PROVISIOND, CONFIG_ID).isPresent()) {
+        //line commented now, since it is not allowed to delete last configuration
+        /*if (cm.getXmlConfiguration(SCHEMA_NAME_PROVISIOND, CONFIG_ID).isPresent()) {
             this.cm.unregisterConfiguration(SCHEMA_NAME_PROVISIOND, CONFIG_ID);
-        }
+        }*/
+
         if (cm.getRegisteredSchema(SCHEMA_NAME_PROVISIOND).isPresent()) {
             this.cm.unregisterSchema(SCHEMA_NAME_PROVISIOND);
         }
-        if (cm.getXmlConfiguration(SCHEMA_NAME_EVENTD, CONFIG_ID).isPresent()) {
+
+        //line commented now, since it is not allowed to delete last configuration
+       /* if (cm.getXmlConfiguration(SCHEMA_NAME_EVENTD, CONFIG_ID).isPresent()) {
             this.cm.unregisterConfiguration(SCHEMA_NAME_EVENTD, CONFIG_ID);
-        }
+        }*/
+
         if (cm.getRegisteredSchema(SCHEMA_NAME_EVENTD).isPresent()) {
             this.cm.unregisterSchema(SCHEMA_NAME_EVENTD);
         }

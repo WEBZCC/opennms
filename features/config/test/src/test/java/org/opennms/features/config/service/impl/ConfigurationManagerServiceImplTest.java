@@ -183,6 +183,10 @@ public class ConfigurationManagerServiceImplTest {
     public void testRemoveEverything() throws IOException {
         Optional<ConfigSchema<?>> configSchema = configManagerService.getRegisteredSchema(CONFIG_NAME);
         ConfigConverter converter = configSchema.get().getConverter();
+
+        //below extra configuration added, since it is not allowed to delete last configuration
+        configManagerService.registerConfiguration(CONFIG_NAME, CONFIG_ID + "_1", new JsonAsString("{}"));
+
         configManagerService.unregisterConfiguration(CONFIG_NAME, CONFIG_ID);
         Optional<JSONObject> json = configManagerService.getJSONConfiguration(CONFIG_NAME, CONFIG_ID);
         Assert.assertTrue("Fail to unregister config", json.isEmpty());

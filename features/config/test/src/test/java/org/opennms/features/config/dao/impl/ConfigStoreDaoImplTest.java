@@ -114,7 +114,7 @@ public class ConfigStoreDaoImplTest {
         Optional<ConfigData> resultAfterDelete = configStoreDao.getConfigData(configName);
         Assert.assertTrue("FAIL configs count is not equal to 1", resultAfterDelete.get().getConfigs().size() == 1);
 
-        //test last config, not allowe if it is last config
+        //check if its last config, deletion not allowed if it is last config
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Deletion of the last config is not allowed. testConfigName, configId testFilename");
         configStoreDao.deleteConfig(configName, filename);
