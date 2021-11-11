@@ -526,10 +526,12 @@
   <bean id="wmiPeerFactory" class="org.opennms.netmgt.config.WmiPeerFactory" depends-on="wmiPeerFactory-init" factory-method="getInstance"/>
 
   <bean id="wmiDataCollectionConfigFactory-init" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+<!--
     <property name="staticMethod"><value>org.opennms.netmgt.config.WmiDataCollectionConfigFactory.init</value></property>
+-->
   </bean>
 
-  <bean id="wmiDataCollectionConfigFactory" class="org.opennms.netmgt.config.WmiDataCollectionConfigFactory" depends-on="wmiDataCollectionConfigFactory-init" factory-method="getInstance"/>
+  <bean id="wmiDataCollectionConfigFactory" class="org.opennms.netmgt.config.WmiDataCollectionConfigFactory" />
 
   <!-- VMware configuration files -->
   <bean id="VmwareCimDatacollectionConfigDao" class="org.opennms.netmgt.dao.vmware.jaxb.VmwareCimDatacollectionConfigDaoJaxb">

@@ -78,19 +78,19 @@ import org.slf4j.LoggerFactory;
  */
 public class WmiCollector extends AbstractRemoteServiceCollector {
 
-	private static final Logger LOG = LoggerFactory.getLogger(WmiCollector.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WmiCollector.class);
 
-	private static final String WMI_COLLECTION_KEY = "wmiCollection";
+    private static final String WMI_COLLECTION_KEY = "wmiCollection";
 
-	private static final String WMI_AGENT_CONFIG_KEY = "wmiAgentConfig";
+    private static final String WMI_AGENT_CONFIG_KEY = "wmiAgentConfig";
 
     private static final String WMI_RESOURCE_TYPES_KEY = "wmiResourceTypes";
 
     private static final String FALLBACK_RESOURCE_TYPE_NAME = "wmiCollector";
 
     private static final Map<String, Class<?>> TYPE_MAP = Collections.unmodifiableMap(Stream.of(
-            new SimpleEntry<>(WMI_COLLECTION_KEY, WmiCollection.class),
-            new SimpleEntry<>(WMI_AGENT_CONFIG_KEY, WmiAgentConfig.class))
+                    new SimpleEntry<>(WMI_COLLECTION_KEY, WmiCollection.class),
+                    new SimpleEntry<>(WMI_AGENT_CONFIG_KEY, WmiAgentConfig.class))
             .collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
 
     public WmiCollector() {
@@ -101,7 +101,7 @@ public class WmiCollector extends AbstractRemoteServiceCollector {
     public void initialize() {
         LOG.debug("initialize: Initializing WmiCollector.");
         initWMIPeerFactory();
-        initWMICollectionConfig();
+        //initWMICollectionConfig();
     }
 
     @Override
@@ -249,7 +249,7 @@ public class WmiCollector extends AbstractRemoteServiceCollector {
             LOG.warn("Error checking group ({}) availability.", wpm.getName(), e);
             // Set the group as unavailable.
             agentState.setGroupIsAvailable(wpm.getName(), false);
-            
+
             // And then continue on to check the next wpm entry.
             return false;
         } finally {
@@ -274,10 +274,10 @@ public class WmiCollector extends AbstractRemoteServiceCollector {
         }
     }
 
-    private void initWMICollectionConfig() {
+/*    private void initWMICollectionConfig() {
         LOG.debug("initialize: Initializing collector: {}", getClass());
         try {
-            WmiDataCollectionConfigFactory.init();
+           WmiDataCollectionConfigFactory.init();
         } catch (FileNotFoundException e) {
             LOG.error("initialize: Error locating configuration.", e);
             throw new UndeclaredThrowableException(e);
@@ -285,7 +285,7 @@ public class WmiCollector extends AbstractRemoteServiceCollector {
             LOG.error("initialize: Error reading configuration.", e);
             throw new UndeclaredThrowableException(e);
         }
-    }
+    }*/
 
     /** {@inheritDoc} */
     @Override
